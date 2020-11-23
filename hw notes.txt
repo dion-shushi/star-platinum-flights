@@ -1,0 +1,71 @@
+TASK: 
+
+to emulate a flight booking website (ex: google flights)
+
+
+1. Extending ER model
+direct or indirect filghts up to 1 connection (2 connections extra credit)
+
+data to add
+customer info: d, name, telephone, email, id used for boarding, family/couple/group traveling together)
+
+id used for boarding ??? => this we create ourselves
+family/couple/group ???? is this supposed to be a status column
+
+more data?
+payment: (card number, taxes(as many as we want), discounts, amount in dollars(other currency optional))
+boarding: (boarding time, gate, waitlist)
+arrival: (actual arrival time, arrival gate, baggage claim #)
+flight info: (movie (y/n), meal (y/n))
+
+optional data
+(multiple airlines, pilot, crew, fuel info, aircraft mechanical checks, etc)
+
+
+
+2. Normalization
+normalize each table upto 3NF/BCNF
+derived attributes or quick lookup values are acceptable (i.e. price+tax, fare class) => explain why?? explain what??
+
+
+3. ER diagram and short project description
+-> draw a diagram with all tables in ER dastabase model
+-> include all PK and FK but can ommit other attributes
+-> must show the relationship cardinalities => whats a cardinality?
+
+4. Transaction
+-> all changes to database must be done by transactions, no isolated SQL statements
+	(should transactions include "begin transaction;" and "end transaction;"?) ==> this is probably the case
+	(think any update/insert/delete is inherently a transaction)
+5. Reports
+-> app should provide standard queries to explore flights (similar to airline websites)??? WHAT?
+-> should include airline clerk side (ex: listing passengers on each seat, listing people in waitlist) => show who's on the waitlist for a flight | list passengers on their corresponding seats ex: (seat_no, passenger_name(s), passenger_id(s)) 
+-> queries must provide useful information to find and compare flights
+-> they should also provide useful infromation to verify status of passengers, flights, airports, etc.
+
+6. Multithreading: NOT NEEDED
+
+7. Initial database state
+-> zero reservations
+-> flights ready to be booked (the amount and type of flights, WE CREATE) ==> randomize the flight date to be somewhere in the next 2 months?
+-> these flights are available for 2 months into the future (pick either from the two months: dec 2020 or january 2021)
+-> give an idea about available flights to the user in the web app with queries ==> HOW?
+
+8. Must be prepared for failures and errors and edge cases (idk what they might be)
+
+9. SQL:
+transaction.sql -> main transaction sql code
+query.sql -> list of main queries
+THESE FILES WILL BE CHECKED BY TAs
+
+PROGRAM EXECUTION:
+->user will open "airlineweb.html" file
+->user will proceedes with booking his/her flights
+->the web app should have features for the user to see
+	-what flights they have booked
+	-what flights are available to book
+	-what fliths are not
+
+question:
+
+

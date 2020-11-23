@@ -25,31 +25,39 @@
         <h2>Platinum Flights</h2>
     </div>
 
-    <div id="border" style="width:95%; height:200px; outline: 2px solid black; margin-left:2.5%; border-radius: 25px;">
-        <div id="select"></div>
-        <select name="flight_class" id="flight_class" style="margin-left:10%;">
-            <option value="economy">Economy</option>
-            <option value="business">Business</option>
-            <option value="first class">First Class</option>
-        </select>
+    <div id="border" class="main_container">
+        <div id="class_passenger">
+            <select name="flight_class" id="select_class">
+                <option value="economy">Economy</option>
+                <option value="business">Business</option>
+                <option value="first class">First Class</option>
+            </select>
+            <select name="passengers" id="select_passanger">
+                <option value="1">1</option>
+                <option value="2">1</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
         <div id="location">
-            <select name="from_location" id="from_location" style="margin-left:10%; margin-top:2%;">
+            <select name="from_location" id="from_location">
                 <option value="houston"> Houston, Texas </option>
                 <option value="galveston"> Galveston, Texas </option>
                 <option value="austin"> Austin, Texas </option>
             </select>
 
-            <select name="to_location" id="to_location" style="margin-left:.5%; margin-top:2%;">
+            <select name="to_location" id="to_location">
                 <option value="houston"> Houston, Texas </option>
                 <option value="galveston"> Galveston, Texas </option>
                 <option value="austin"> Austin, Texas </option>
             </select>
 
-            <select name="departure" id="departure" style="margin-left:7%; margin-top:2%;">
+            <select name="departure" id="departure">
                 <option value="date"> Date </option>
             </select>
 
-            <select name="return" id="return" style="margin-left:.5%; margin-top:2%;">
+            <select name="return" id="return">
                 <option value="date"> Date </option>
             </select>
 

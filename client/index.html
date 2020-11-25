@@ -25,31 +25,33 @@
         <h2>Platinum Flights</h2>
     </div>
 
-    <div id="border" style="width:95%; height:200px; outline: 2px solid black; margin-left:2.5%; border-radius: 25px;">
+    <div id="border">
         <div id="select"></div>
-        <select name="flight_class" id="flight_class" style="margin-left:10%;">
+        <select name="flight_class" id="flight_class" class = "flightButton">
             <option value="economy">Economy</option>
             <option value="business">Business</option>
             <option value="first class">First Class</option>
         </select>
+
         <div id="location">
-            <select name="from_location" id="from_location" style="margin-left:10%; margin-top:2%;">
+
+            <select name="from_location" id="from_location" class = "flightButton">
                 <option value="houston"> Houston, Texas </option>
                 <option value="galveston"> Galveston, Texas </option>
                 <option value="austin"> Austin, Texas </option>
             </select>
 
-            <select name="to_location" id="to_location" style="margin-left:.5%; margin-top:2%;">
+            <select name="to_location" id="to_location" class = "flightButton">
                 <option value="houston"> Houston, Texas </option>
                 <option value="galveston"> Galveston, Texas </option>
                 <option value="austin"> Austin, Texas </option>
             </select>
 
-            <select name="departure" id="departure" style="margin-left:7%; margin-top:2%;">
+            <select name="departure" id="departure" class = "flightButton">
                 <option value="date"> Date </option>
             </select>
 
-            <select name="return" id="return" style="margin-left:.5%; margin-top:2%;">
+            <select name="return" id="return" class = "flightButton" style="margin-left:.5%; margin-top:2%;">
                 <option value="date"> Date </option>
             </select>
 

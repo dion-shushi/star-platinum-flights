@@ -21,6 +21,20 @@ app.post('/todos', async(req, res)=>{
   }
 });
 
+app.post('/sendFlightInfo', async(req, res) => {
+  console.log(req.body);
+  try{
+    const {from_city} = req.body;
+    const newTodo = await pool.query({
+      text: `SELECT * FROM test_flights WHERE from_city = ($1);`,
+      values: from_city
+    });
+    res.json(newTodo);
+  } catch(err){
+    console.log(err.message);
+  }
+})
+
 app.get('/get', async(req,res)=>{
   res.send("sending data");
 })

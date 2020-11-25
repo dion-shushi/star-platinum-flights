@@ -18,6 +18,9 @@ const editTodo = (id) => {
 // function to display todos
 const displayTodos = () => {
   const todoTable = document.querySelector('#todo-table');
+  const from = document.getElementById('from_location');
+  const to = document.getElementById('to_location');
+  
 
   // display all todos by modifying the HTML in "todo-table"
   let tableHTML = "";
@@ -30,8 +33,34 @@ const displayTodos = () => {
     </tr>`;
   })
   todoTable.innerHTML = tableHTML;
-
 }
+
+async function displayWithFilter(){
+  // read the todo description from input
+  const city = document.getElementById('from_location').value;
+  // console.log(passenger_count);
+  // console.log(description);
+
+  // use try... catch... to catch error
+  try {
+
+    // insert new todo to "http://localhost:5000/todos", with "POST" method
+    const body = { city: city };
+    const response = await fetch("http://localhost:5000/sendFlightInfo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+
+    // refresh the page when inserted
+    location.reload();
+    return false;
+
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
 
 // select all the todos when the codes first run
 selectTodo();
@@ -48,7 +77,7 @@ async function selectTodo() {
     const jsonData = await response.json();
 
     setTodos(jsonData);
-    displayTodos();
+    // displayTodos();
 
   } catch (err) {
     console.log(err.message);

@@ -1,12 +1,16 @@
+#banner {
+    display: flex;
+    justify-content: center;
+}
 
 #logo {
-    max-width: 200px;
-    max-height: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    border-radius: 25px;
+    width: 300px;
+    height: auto;
+}
+
+#cloud01 {
+    width: 200px;
+    height: auto;
 }
 
 #title {
@@ -14,17 +18,17 @@
     margin: 50px 0px 20px 0px;
 }
 
-.main_container{
-    width:50%; 
-    height:200px; 
-    margin-left:2.5%; 
+.main_container {
+    width: 50%;
+    height: 200px;
+    margin-left: 2.5%;
     border-radius: 25px;
     margin: auto;
     display: block;
-    outline: 2px solid black; 
+    outline: 2px solid black;
 }
 
-.main_container #class_passenger, #location{
+.main_container #class_passenger, #location {
     margin-left: 10px;
     margin-top: 20px;
 }

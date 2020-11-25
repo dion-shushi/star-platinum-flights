@@ -18,12 +18,24 @@
 </head>
 
 <body>
-    <input type="image" id="logo" src="https://i.redd.it/lauuayy2ses41.png" onclick="goToArt()" />
+    <div id="banner">
+        <img src="img/cloud.png" id="cloud01".>
+        <input type="image" id="logo" src="img/logo_actual_01.png" onclick="goToArt()" />
+        <img src="img/cloud.png" id="cloud01".>
+    </div>
 
     <!-- Title -->
     <div id="title">
         <h2>Platinum Flights</h2>
     </div>
+
+    <!-- input -->
+    <div class="input-group mb-3" id="input-todo">
+        <input type="text" class="form-control" placeholder="what I need to do" id="todo-description">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" onclick="insertTodo()">Add</button>
+        </div>
+      </div>
 
     <div id="border" class="main_container">
         <div id="class_passenger">
@@ -60,22 +72,22 @@
             <select name="return" id="return">
                 <option value="date"> Date </option>
             </select>
-
         </div>
+        <button onClick="displayWithFilter()">Search</button>
     </div>
     </div>
 
     <!-- dynamic table to display todo list -->
-    <table class="table mt-5 text-center" id="todo-list">
+    <table class="table mt-5 text-center" id="result-list">
         <thead>
             <tr>
-                <th>Description</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Price</th>
             </tr>
         </thead>
         <!-- add todos in tbody by modying the HTML in main.js -->
-        <tbody id="todo-table">
+        <tbody id="result-table">
         </tbody>
     </table>
     <!-- End of dynamic table -->
@@ -104,7 +116,7 @@
 </body>
 
 <script src="main.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -112,6 +124,6 @@
     crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script> -->
 
 </html>

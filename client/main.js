@@ -1,53 +1,50 @@
-// set global variable todos
-let todos = []
+// set global variable for all the flights
+let availableFlights = []
 
-// function to set todos
-const setTodos = (data) => {
-  todos = data;
+// function to set the global variable to the returned flights
+const setAvailableFlights = (data) => {
+  availableFlights = data;
 }
 
-// function edit todo
-const editTodo = (id) => {
 
-  const descrip = todos.filter(todo => todo.todo_id === id)[0].description;
-  document.querySelector('#edited-description').value = descrip;
-  document.querySelector('#save-edit-description').addEventListener("click", function() {updateTodo(id)});
-
-}
-
-// function to display todos
+// function to display all the returned flights
 const displayTodos = () => {
-  const todoTable = document.querySelector('#todo-table');
+  const resultTable = document.querySelector('#result-table');
+  const from = document.getElementById('from_location');
+  const to = document.getElementById('to_location');
 
-  // display all todos by modifying the HTML in "todo-table"
+
+  // display all flights by modifying the HTML in "result-table"
   let tableHTML = "";
-  todos.map(todo =>{
+  availableFlights.map(flight => {
     tableHTML +=
-    `<tr key=${todo.todo_id}>
-    <th>${todo.description}</th>
-    <th><button class="btn btn-warning" type="button" data-toggle="modal" data-target="#edit-modal" onclick="editTodo(${todo.todo_id})">Edit</button></th>
-    <th><button class="btn btn-danger" type="button" onclick="deleteTodo(${todo.todo_id})">Delete</button></th>
+      `<tr key=${flight.flight_id}>
+    <th>${flight.from_city}</th>
+    <th>${flight.to_city}</th>
+    <th>${flight.price}</th>
     </tr>`;
   })
-  todoTable.innerHTML = tableHTML;
-
+  resultTable.innerHTML = tableHTML;
 }
 
-// select all the todos when the codes first run
-selectTodo();
+async function displayWithFilter() {
+  // grab the value that is in the the dropdown with the id "from_location"
+  const city = document.getElementById('from_location').value;
 
-
-// The following are async function to select, insert, update and delete todos
-// select all the todos
-async function selectTodo() {
-  // use try... catch... to catch error
+  // try... catch... to catch error
+  // POST request that sends the variable "city" from above to the link "/sendFlightInfo"
+  // returns an array of all the rows that are flying from "city"
   try {
-
-    // GET all todos from "http://localhost:5000/todos"
-    const response = await fetch("http://localhost:5000/todos")
+    const body = { city: city };
+    const response = await fetch("http://localhost:5000/sendFlightInfo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    // response.json() is the returned array
     const jsonData = await response.json();
-
-    setTodos(jsonData);
+    console.log(jsonData);
+    setAvailableFlights(jsonData);
     displayTodos();
 
   } catch (err) {
@@ -81,15 +78,6 @@ async function insertTodo() {
   }
 }
 
-async function print(){
-  const response = await fetch("http://localhost:5000/get", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" }
-  });
-  console.log(response.message);
-}
-
-
 // delete a todo by id
 async function deleteTodo(id) {
   try {
@@ -109,17 +97,17 @@ async function deleteTodo(id) {
 
 // update a todo description
 async function updateTodo(id) {
-  
+
   const description = document.querySelector('#edited-description').value;
   // console.log(description);
   // console.log(id);
 
   try {
     // update a todo from "http://localhost:5000/todos/${id}", with "PUT" method
-    const body = {description};
+    const body = { description };
     const response = await fetch(`http://localhost:5000/todos/${id}`, {
       method: "PUT",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
     })
 
@@ -132,7 +120,7 @@ async function updateTodo(id) {
   }
 }
 
-async function goToArt(){
-    window.open( 
-        "https://www.reddit.com/r/StardustCrusaders/comments/fzz2o6/fanart_star_platinum_the_world/", "_blank"); 
+async function goToArt() {
+  window.open(
+    "https://www.reddit.com/r/StardustCrusaders/comments/fzz2o6/fanart_star_platinum_the_world/", "_blank");
 }

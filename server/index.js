@@ -21,6 +21,28 @@ app.post('/todos', async(req, res)=>{
   }
 });
 
+app.post('/sendFlightInfo', async(request, response) => {
+  try{
+    const filter = request.body.city;
+    const getFlights = await pool.query(`SELECT * FROM test_flights where from_city=($1)`, [filter]);
+    const res = getFlights.rows;
+    console.log(res);
+    response.json(res);
+  } catch(err){
+    console.log(err.message);
+  }
+});
+//   console.log('req');
+//   console.log(request.body);
+//   pool.query('SELECT * FROM test_flights', (err, res) => {
+//     if (err) {
+//       console.log(err.stack)
+//     } else {
+//       response.json(res.rows);
+//     }
+//   })
+// })
+
 app.get('/get', async(req,res)=>{
   res.send("sending data");
 })

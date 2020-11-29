@@ -22,16 +22,8 @@
   margin: auto;
 }
 
-
-#title {
+#title{
   text-align: center;
-  margin: 50px 0px 20px 0px;
-}
-
-#result-list {
-  width: 80%;
-  text-align: center;
-  margin-left: 10%;
 }
 
 .flightButton {
@@ -45,26 +37,54 @@
   height:35px;
 }
 
-#from_location {
-  margin-top:2%;
-
+#dynamic-flights{
+  margin-top: 40px;
 }
 
-#to_location {
-  margin-left:.5%;
-
+#available-flights{
+  border-radius: 25px;
+  border: 2px solid black;
+  width: 80%;
+  margin: auto;
 }
 
-#departure {
-  
-  float: right;
-  width: 80px;
-  margin-top: 2%;
-  margin-left: 1%;
-
+#table-title{
+  font-size: 25px;
 }
 
-#return {
-  float: right;
-  width: 80px;
+#available-flights, #result-list {
+  width: 80%;
+  text-align: center;
+  /* margin-left: 10%; */
+  margin: auto;
+}
+
+#result-table{
+  margin: 10px;
+}
+
+#clickable{
+  cursor: pointer;
+}
+
+.vertical-alignment-helper {
+  display:table;
+  height: 100%;
+  width: 100%;
+  pointer-events:none;
+}
+.vertical-align-center {
+  /* To center vertically */
+  display: table-cell;
+  vertical-align: middle;
+  pointer-events:none;
+}
+.modal-content {
+  /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+  width:inherit;
+max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching full width */
+  height:inherit;
+  /* To center horizontally */
+  margin: 0 auto;
+  pointer-events:all;
 }

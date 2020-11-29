@@ -6,36 +6,57 @@ const setAvailableFlights = (data) => {
   availableFlights = data;
 }
 
-
 // function to display all the returned flights
 const displayTodos = () => {
-  const resultTable = document.querySelector('#result-table');
-  const from = document.getElementById('from_location');
-  const to = document.getElementById('to_location');
 
+  const dynamicTable = document.getElementById("dynamic-table");
+  var toAdd = "<div id='available-flights'>";
+  toAdd += "<div id='table-title'></div>";
+  toAdd += "<table class='table' id='result-list'>";
+  toAdd += "<tbody id='result-table'></tbody>";
+  toAdd += "</table></div>";
+
+  dynamicTable.innerHTML = toAdd;
+
+  const resultTable = document.querySelector('#result-table');
+
+  const result_list = document.getElementById("table-title");
+  result_list.innerHTML = "<div id='table-title'>Available Flights</div>";
 
   // display all flights by modifying the HTML in "result-table"
   let tableHTML = "";
   availableFlights.map(flight => {
     tableHTML +=
-      `<tr key=${flight.flight_id}>
+      `<tr key=${flight.flight_id} id="clickable" onClick=clicked(${flight.flight_id}) data-toggle="modal" data-target="#myModal">
     <th>${flight.from_city}</th>
     <th>${flight.to_city}</th>
     <th>${flight.price}</th>
     </tr>`;
   })
+
   resultTable.innerHTML = tableHTML;
+}
+
+function clicked(flightId) {
+  console.log("clicked " + flightId);
 }
 
 async function displayWithFilter() {
   // grab the value that is in the the dropdown with the id "from_location"
-  const city = document.getElementById('from_location').value;
+  const from_city = document.getElementById('from_location').value;
+  const to_city = document.getElementById('to_location').value;
+
+  const from_date = document.getElementById('departure');
+  const to_date = document.getElementById('return');
 
   // try... catch... to catch error
   // POST request that sends the variable "city" from above to the link "/sendFlightInfo"
   // returns an array of all the rows that are flying from "city"
   try {
-    const body = { city: city };
+    const body = { 
+      from_c: from_city,
+      to_c: to_city
+    };
     const response = await fetch("http://localhost:5000/sendFlightInfo", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

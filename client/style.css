@@ -1,70 +1,71 @@
 #banner {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 #logo {
-    width: 300px;
-    height: auto;
+  width: 300px;
+  height: auto;
 }
 
 #cloud01 {
-    width: 200px;
-    height: auto;
+  width: 200px;
+  height: auto;
 }
 
 #border {
-  border-radius: 25px;
-  border: 2px solid black;
-  padding: 20px;
-  width: 80%;
-  height: 175px;
-  margin: auto;
+border-radius: 25px;
+border: 2px solid black;
+padding: 20px;
+width: 80%;
+height: 175px;
+margin: auto;
 }
 
-
 #title {
-  text-align: center;
-  margin: 50px 0px 20px 0px;
+text-align: center;
+margin: 50px 0px 20px 0px;
 }
 
 #result-list {
-  width: 80%;
-  text-align: center;
-  margin-left: 10%;
-}
+width: 80%;
+text-align: center;
+margin-left: 10%;
 
 .flightButton {
-  border-radius: 4px;
-  border: 1px solid black;
+border-radius: 4px;
+border: 1px solid black;
+height: 35px;
+text-align-last: center;
 }
 
 #flight_class {
-  width: 170px;
-  text-align-last: center;
-  height:35px;
+width: 156px;
+height: 30px;
+text-align-last: center;
 }
 
 #from_location {
-  margin-top:2%;
-
+margin-top:2%;
 }
 
 #to_location {
-  margin-left:.5%;
-
+margin-left:.5%;
 }
 
 #departure {
-  
-  float: right;
-  width: 80px;
-  margin-top: 2%;
-  margin-left: 1%;
-
+margin-left: 39.45%;
+border-radius: 4px;
+border: 1px solid black;
 }
 
 #return {
-  float: right;
-  width: 80px;
+border-radius: 4px;
+border: 1px solid black;
+}
+
+button {
+margin-left: 44%;
+margin-top: 5.5%;
+width: 100px;
 }

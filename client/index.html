@@ -10,6 +10,7 @@
 
     <!-- style file -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/gm-date-selection.css">
 
     <title>Platinum Flights</title>
     <!-- <header>
@@ -43,21 +44,25 @@
                 <option value="houston"> Houston, Texas </option>
                 <option value="galveston"> Galveston, Texas </option>
                 <option value="austin"> Austin, Texas </option>
+                <option value="san antonio"> San Antonio, Texas </option>
+                <option value="dallas"> Dallas, Texas </option>
             </select>
 
             <select name="to_location" id="to_location" class = "flightButton">
                 <option value="houston"> Houston, Texas </option>
                 <option value="galveston"> Galveston, Texas </option>
                 <option value="austin"> Austin, Texas </option>
+                <option value="san antonio"> San Antonio, Texas </option>
+                <option value="dallas"> Dallas, Texas </option>
             </select>
+          
+            <input type="date" id="departure" name="departure"
+                value="2020-12-01"
+                min="2020-12-01" max="2021-01-31">
 
-            <select name="departure" id="departure" class = "flightButton">
-                <option value="date"> Date </option>
-            </select>
-
-            <select name="return" id="return" class = "flightButton" style="margin-left:.5%; margin-top:2%;">
-                <option value="date"> Date </option>
-            </select>
+            <input type="date" id="return" name="return"
+                value="2020-12-01"
+                min="2020-12-01" max="2021-01-31">    
         </div>
         <button onClick="displayWithFilter()">Search</button>
     </div>
@@ -102,6 +107,8 @@
 </body>
 
 <script src="main.js"></script>
+<!-- my date-selector script -->
+
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
@@ -111,5 +118,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script> -->
+
+<!-- my date-selector config -->   
 
 </html>

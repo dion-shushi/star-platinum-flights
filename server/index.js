@@ -26,7 +26,7 @@ app.post('/sendFlightInfo', async(request, response) => {
     const from = request.body.from_c;
     const to = request.body.to_c;
     
-    const getFlights = await pool.query(`SELECT * FROM test_flights where from_city=($1) and to_city=($2)`, [from, to]);
+    const getFlights = await pool.query(`SELECT * FROM hw4_flights where from_city=($1) and to_city=($2) order by price asc`, [from, to]);
     const res = getFlights.rows;
     console.log(res);
     response.json(res);

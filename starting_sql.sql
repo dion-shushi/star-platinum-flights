@@ -1,5 +1,5 @@
-drop table if exists test_flights;
-create table test_flights
+drop table if exists hw4_flights;
+create table hw4_flights
 (
 	flight_id integer NOT NULL,
 	flight_no character(6) NOT NULL,
@@ -18,7 +18,7 @@ create table test_flights
 	PRIMARY KEY (flight_id)
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1001,
 		'PG0001',
@@ -36,7 +36,7 @@ values(
 		'galveston'		
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1002,
 		'PG0002',
@@ -54,7 +54,7 @@ values(
 		'austin'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1003,
 		'PG0003',
@@ -72,7 +72,7 @@ values(
 		'san antonio'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1004,
 		'PG0004',
@@ -90,7 +90,7 @@ values(
 		'dallas'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1005,
 		'PG0005',
@@ -108,7 +108,7 @@ values(
 		'galveston'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1006,
 		'PG0006',
@@ -126,7 +126,7 @@ values(
 		'austin'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1007,
 		'PG0007',
@@ -144,7 +144,7 @@ values(
 		'san antonio'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1008,
 		'PG0008',
@@ -162,7 +162,7 @@ values(
 		'dallas'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1009,
 		'PG0009',
@@ -180,7 +180,7 @@ values(
 		'galveston'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1010,
 		'PG0010',
@@ -198,7 +198,7 @@ values(
 		'austin'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1011,
 		'PG0011',
@@ -216,7 +216,7 @@ values(
 		'san antonio'
 );
 
-insert into test_flights
+insert into hw4_flights
 values(
 		1012,
 		'PG0012',
@@ -232,61 +232,4 @@ values(
 		'firstclass',
 		'houston',
 		'dallas'
-);
-
-=======
-drop table if exists test_flights;
-create table test_flights
-(
-	flight_id integer NOT NULL,
-	flight_class character(10) NOT NULL,
-	from_city character(10),
-	to_city character(10),
-	price integer,
-	PRIMARY KEY (flight_id)
-);
-
-insert into test_flights
-values(
-		1004,
-		'economy',
-		'houston',
-		'galveston',
-		100
-);
-
-insert into test_flights
-values(
-		1005,
-		'business',
-		'houston',
-		'galveston',
-		400
-);
-
-insert into test_flights
-values(
-		1006,
-		'economy',
-		'galveston',
-		'houston',
-		300
-);
-
-insert into test_flights
-values(
-		1007,
-		'business',
-		'galveston',
-		'houston',
-		400
-);
-
-insert into test_flights
-values(
-		1008,
-		'economy',
-		'houston',
-		'austin',
-		300
 );

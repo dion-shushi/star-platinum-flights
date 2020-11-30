@@ -53,7 +53,7 @@ async function displayWithFilter() {
   // POST request that sends the variable "city" from above to the link "/sendFlightInfo"
   // returns an array of all the rows that are flying from "city"
   try {
-    const body = { 
+    const body = {
       from_c: from_city,
       to_c: to_city
     };
@@ -67,6 +67,26 @@ async function displayWithFilter() {
     console.log(jsonData);
     setAvailableFlights(jsonData);
     displayTodos();
+
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
+async function displayCity() {
+  const from_city = document.getElementById('from_location').value;
+  try {
+    const body = {
+      from_c: from_city
+    };
+    const response = await fetch("http://localhost:5000/grabFlights", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    // response.json() is the returned array
+    const jsonData = await response.json();
+    console.log(jsonData);
 
   } catch (err) {
     console.log(err.message);

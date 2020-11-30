@@ -75,9 +75,11 @@ async function displayWithFilter() {
 
 async function displayCity() {
   const from_city = document.getElementById('from_location').value;
+  const to_city = document.getElementById('to_location').value;
   try {
     const body = {
-      from_c: from_city
+      from_c: from_city,
+      to_c: to_city
     };
     const response = await fetch("http://localhost:5000/grabFlights", {
       method: "POST",
@@ -86,7 +88,19 @@ async function displayCity() {
     });
     // response.json() is the returned array
     const jsonData = await response.json();
-    console.log(jsonData);
+
+    let arrayOfData = [
+      {
+        from_airport: jsonData[0].departure_airport,
+        to_airport: jsonData[0].arrival_airport
+      }
+    ]
+
+    console.log(arrayOfData);
+
+    // setAvailableFlights(jsonData);
+    // displayTodos();
+    // console.log(jsonData);
 
   } catch (err) {
     console.log(err.message);

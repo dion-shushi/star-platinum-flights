@@ -1,5 +1,39 @@
-drop table if exists hw4_flights CASCADE;;
-drop table if exists hw4_airport CASCADE;;
+/*
+	created
+	hw4_aircraft
+	hw4_airport
+	hw4_flights
+	hw4_ticket
+	hw4_ticket_flights
+	hw4_bookings
+	hw4_passenger_info
+	hw4_baggage
+	hw4_boarding_info
+
+	not created
+	hw4_payment
+	hw4_boarding_passes
+	hw4_one_connection
+	hw4_seats
+*/
+
+drop table if exists hw4_flights CASCADE;
+drop table if exists hw4_airport CASCADE;
+DROP TABLE IF EXISTS hw4_aircraft CASCADE;
+DROP TABLE IF EXISTS hw4_ticket CASCADE;
+DROP TABLE IF EXISTS hw4_ticket_flights CASCADE;
+DROP TABLE IF EXISTS hw4_bookings CASCADE;
+DROP TABLE IF EXISTS hw4_passenger_info CASCADE;
+DROP TABLE IF EXISTS hw4_baggage CASCADE;
+DROP TABLE IF EXISTS hw4_boarding_info CASCADE;
+
+
+CREATE TABLE hw4_aircraft(
+    aircraft_code char(3),
+    model char(25),
+    PRIMARY KEY(aircraft_code),
+    CONSTRAINT "hw4_flights_aircraft_code_fkey" FOREIGN KEY (aircraft_code) REFERENCES hw4_aircraft(aircraft_code)
+);
 
 CREATE TABLE hw4_airport (
 	airport_code char(3),
@@ -24,6 +58,89 @@ CREATE TABLE hw4_flights (
     CONSTRAINT "hw4_flights_arrival_airport_fkey" FOREIGN KEY (arrival_airport) REFERENCES hw4_airport(airport_code),
     CONSTRAINT "hw4_flights_departure_airport_fkey" FOREIGN KEY (departure_airport) REFERENCES hw4_airport(airport_code)
 );
+
+CREATE TABLE hw4_bookings (
+    book_ref character(6) NOT NULL,
+    book_date timestamp WITH time zone NOT NULL,
+    total_amount numeric(10, 2) NOT NULL,
+    PRIMARY KEY(book_ref)
+);
+
+CREATE TABLE hw4_ticket(
+    ticket_no char(13) NOT NULL,
+    book_ref character(6) NOT NULL,
+    passenger_id varchar(20) NOT NULL,
+    PRIMARY KEY (ticket_no),
+    CONSTRAINT "hw4_ticket_book_ref_fkey" FOREIGN KEY (book_ref) REFERENCES hw4_bookings(book_ref)
+);
+
+CREATE TABLE hw4_ticket_flights (
+    ticket_no character(13) NOT NULL,
+    flight_id integer NOT NULL,
+    fare_conditions character varying(10) NOT NULL,
+    amount numeric(10, 2) NOT NULL,
+    PRIMARY KEY (ticket_no, flight_id),
+    CONSTRAINT "hw4_ticket_flights_flight_id_fkey" FOREIGN KEY (flight_id) REFERENCES hw4_flights(flight_id),
+    CONSTRAINT "hw4_ticket_flights_ticket_no_fkey" FOREIGN KEY (ticket_no) REFERENCES hw4_ticket(ticket_no),
+    CONSTRAINT ticket_flights_amount_check CHECK ((amount >= (0)::numeric)),
+    CONSTRAINT ticket_flights_fare_conditions_check CHECK (
+        (
+            (fare_conditions)::text = ANY (
+                ARRAY [('Economy'::character varying)::text, ('Comfort'::character varying)::text, ('Business'::character varying)::text]
+            )
+        )
+    )
+);
+
+create table hw4_baggage(
+	baggage_id varchar(20),
+	baggage_claim_no varchar(10),
+	baggage_amount int,
+	primary key (baggage_id),
+	constraint "hw4_passenger_info_baggage_id_fkey" foreign key (baggage_id) references hw4_baggage(baggage_id)
+);
+
+create table hw4_passenger_info(
+	passenger_id varchar(20),
+	passenger_name varchar(40),
+	passenger_email char(50),
+	passenger_no char(15),
+	baggage_id varchar(20),
+	PRIMARY KEY(passenger_id),
+	constraint "hw4_passenger_info_baggage_id_fkey" foreign key (baggage_id) references hw4_baggage(baggage_id)
+);
+
+create table hw4_boarding_info(
+	passenger_id varchar(20),
+	boarding_time timestamp WITH time zone,
+	boarding_gate char(6),
+	seat_no char(3),
+	baggage_id varchar(10),
+	departure_aiport char(3),
+	primary key (passenger_id),
+	constraint "hw4_boarding_info_baggage_id_fky" FOREIGN key (baggage_id) references hw4_baggage(baggage_id)
+	/*
+		add seat_no and fare_condition as a foreign key
+	*/
+);
+
+/*========================================================*/
+
+/*aircraft*/
+INSERT INTO hw4_aircraft
+VALUES ('773', 'Boeing 777-300');
+
+INSERT INTO hw4_aircraft
+VALUES ('763', 'Boeing 767-300');
+
+INSERT INTO hw4_aircraft
+VALUES ('SU9', 'Boeing 777-300');
+
+INSERT INTO hw4_aircraft
+VALUES ('320', 'Boeing 777-300');
+
+INSERT INTO hw4_aircraft
+VALUES ('321', 'Boeing 777-300');
 
 /*========================================================*/
 

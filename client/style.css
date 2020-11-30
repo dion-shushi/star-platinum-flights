@@ -14,58 +14,117 @@
 }
 
 #border {
-border-radius: 25px;
-border: 2px solid black;
-padding: 20px;
-width: 80%;
-height: 175px;
-margin: auto;
+  border-radius: 25px;
+  border: 2px solid black;
+  padding: 20px;
+  width: 80%;
+  height: 175px;
+  margin: auto;
 }
 
 #title {
-text-align: center;
-margin: 50px 0px 20px 0px;
+  text-align: center;
+  margin: 50px 0px 20px 0px;
 }
 
 #result-list {
-width: 80%;
-text-align: center;
-margin-left: 10%;
+  width: 80%;
+  text-align: center;
+  margin-left: 10%;
+}
 
 .flightButton {
-border-radius: 4px;
-border: 1px solid black;
-height: 35px;
-text-align-last: center;
+  border-radius: 4px;
+  border: 1px solid black;
+  height: 35px;
+  text-align-last: center;
 }
 
 #flight_class {
-width: 156px;
-height: 30px;
-text-align-last: center;
+  width: 156px;
+  height: 30px;
+  text-align-last: center;
+}
+
+#search_button{
+  display: flex;
+}
+
+#search_button, button{
+  justify-content: center;
+  align-items: center;
+}
+
+#dynamic-flights {
+  margin-top: 40px;
+}
+
+#available-flights {
+  border-radius: 25px;
+  border: 2px solid black;
+  width: 80%;
+  margin: auto;
+}
+
+#table-title {
+  font-size: 25px;
+}
+
+#available-flights, #result-list {
+  width: 80%;
+  text-align: center;
+  /* margin-left: 10%; */
+  margin: auto;
+}
+
+#result-table {
+  margin: 10px;
+}
+
+#clickable {
+  cursor: pointer;
+}
+
+.vertical-alignment-helper {
+  display: table;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.vertical-align-center {
+  /* To center vertically */
+  display: table-cell;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.modal-content {
+  /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+  width: inherit;
+  max-width: inherit;
+  /* For Bootstrap 4 - to avoid the modal window stretching full width */
+  height: inherit;
+  /* To center horizontally */
+  margin: 0 auto;
+  pointer-events: all;
 }
 
 #from_location {
-margin-top:2%;
+  margin-top: 2%;
 }
 
 #to_location {
-margin-left:.5%;
+  margin-left: .5%;
 }
 
 #departure {
-margin-left: 39.45%;
-border-radius: 4px;
-border: 1px solid black;
+  margin-left: 39.45%;
+  border-radius: 4px;
+  border: 1px solid black;
 }
 
 #return {
-border-radius: 4px;
-border: 1px solid black;
-}
-
-button {
-margin-left: 44%;
-margin-top: 5.5%;
-width: 100px;
+  border-radius: 4px;
+  border: 1px solid black;
 }

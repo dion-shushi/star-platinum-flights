@@ -23,8 +23,10 @@ app.post('/todos', async(req, res)=>{
 
 app.post('/sendFlightInfo', async(request, response) => {
   try{
-    const filter = request.body.city;
-    const getFlights = await pool.query(`SELECT * FROM test_flights where from_city=($1)`, [filter]);
+    const from = request.body.from_c;
+    const to = request.body.to_c;
+    
+    const getFlights = await pool.query(`SELECT * FROM hw4_flights where from_city=($1) and to_city=($2) order by price asc`, [from, to]);
     const res = getFlights.rows;
     console.log(res);
     response.json(res);
@@ -32,16 +34,6 @@ app.post('/sendFlightInfo', async(request, response) => {
     console.log(err.message);
   }
 });
-//   console.log('req');
-//   console.log(request.body);
-//   pool.query('SELECT * FROM test_flights', (err, res) => {
-//     if (err) {
-//       console.log(err.stack)
-//     } else {
-//       response.json(res.rows);
-//     }
-//   })
-// })
 
 app.get('/get', async(req,res)=>{
   res.send("sending data");

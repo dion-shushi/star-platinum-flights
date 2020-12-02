@@ -78,38 +78,6 @@ async function clicked(flight_id) {
   }
 }
 
-async function displayWithFilter() {
-  // grab the value that is in the the dropdown with the id "from_location"
-  const from_city = document.getElementById('from_location').value;
-  const to_city = document.getElementById('to_location').value;
-
-  const from_date = document.getElementById('departure');
-  const to_date = document.getElementById('return');
-
-  // try... catch... to catch error
-  // POST request that sends the variable "city" from above to the link "/sendFlightInfo"
-  // returns an array of all the rows that are flying from "city"
-  try {
-    const body = {
-      from_c: from_city,
-      to_c: to_city
-    };
-    const response = await fetch("http://localhost:5000/sendFlightInfo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
-    });
-    // response.json() is the returned array
-    const jsonData = await response.json();
-    console.log(jsonData);
-    setAvailableFlights(jsonData);
-    displayTodos();
-
-  } catch (err) {
-    console.log(err.message);
-  }
-}
-
 async function displayCities() {
   const from_city = document.getElementById('from_location').value;
   const to_city = document.getElementById('to_location').value;

@@ -54,26 +54,23 @@
                 <option value="san antonio"> San Antonio, Texas </option>
                 <option value="dallas"> Dallas, Texas </option>
             </select>
-          
-            <input type="date" id="departure" name="departure"
-                value="2020-12-01"
-                min="2020-12-01" max="2021-01-31">
 
-            <input type="date" id="return" name="return"
-                value="2020-12-01"
-                min="2020-12-01" max="2021-01-31">    
+            <input type="date" id="departure" name="departure" value="2020-12-01" min="2020-12-01" max="2021-01-31">
+
+            <input type="date" id="return" name="return" value="2020-12-01" min="2020-12-01" max="2021-01-31">
         </div>
         <div id="search_button">
             <button onClick="displayWithFilter()">Search</button>
         </div>
     </div>
 
-    <button onClick="displayCity()">Cities</button>
+    <button onClick="displayCities()">Cities</button>
 
     <div id="dynamic-table"></div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- Select Modal -->
+    <div class="modal fade" id="firstModalID" tabindex="-1" role="dialog" aria-labelledby="firstModalLabel"
+        aria-hidden="true">
         <div class="vertical-alignment-helper">
             <div class="modal-dialog vertical-align-center">
                 <div class="modal-content">
@@ -82,13 +79,110 @@
                                 aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        <h4 class="modal-title" id="firstModalTitleId">Modal title</h4>
 
                     </div>
                     <div class="modal-body">...</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Select</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
+                            data-target="#passengerInfoModal" onclick="goToPassengerInfoPage()">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Passenger Info Modal -->
+    <div class="modal fade" id="passengerInfoModal" tabindex="-1" role="dialog"
+        aria-labelledby="passengerInfoModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                        </button>
+                        <h4 class="modal-title" id="passengerInfoModalTitleId">Who's flying?</h4>
+
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
+                            data-target="#paymentInfoModal" onclick="goToPaymentPage()">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Info Modal -->
+    <div class="modal fade" id="paymentInfoModal" tabindex="-1" role="dialog" aria-labelledby="paymentInfoModalLabel"
+        aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                        </button>
+                        <h4 class="modal-title" id="paymentInfoModalTitleId">Payment</h4>
+
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
+                        data-target="#selectSeatModal"
+                            onclick="goToSelectSeatsPage()">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Seats Modal -->
+    <div class="modal fade" id="selectSeatModal" tabindex="-1" role="dialog" aria-labelledby="selectSeatModalLabel"
+        aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                        </button>
+                        <h4 class="modal-title" id="selectSeatModalTitleId">Seats</h4>
+
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
+                        data-target="#reviewModal"
+                            onclick="goToReviewPage()">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
+        aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                        </button>
+                        <h4 class="modal-title" id="reviewModalTitleId">Review</h4>
+
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            onclick="goToBookTicketsPage()">Book</button>
                     </div>
                 </div>
             </div>
@@ -112,6 +206,6 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script> -->
 
-<!-- my date-selector config -->   
+<!-- my date-selector config -->
 
 </html>

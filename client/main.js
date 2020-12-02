@@ -29,11 +29,12 @@ const displayTodos = () => {
   // display all flights by modifying the HTML in "result-table"
   let tableHTML = "";
   availableFlights.map(flight => {
+    let date = new Date(flight.scheduled_departure);
     tableHTML +=
       `<tr key=${flight.flight_id} id="clickable" onClick=clicked(${flight.flight_id}) data-toggle="modal" data-target="#myModal">
     <th>${from}</th>
     <th>${to}</th>
-    <th>${flight.scheduled_departure}</th>
+    <th>${date.getUTCHours()-6}:${date.getUTCMinutes()} PM</th>
     <th>${flight.base_price}</th>
     </tr>`;
   })
@@ -66,8 +67,10 @@ async function clicked(flight_id) {
     const jsonData = await response.json();
 
     modalHeader.innerHTML = `${jsonData[0].departure_airport} -> ${jsonData[0].arrival_airport}`;
-    console.log(jsonData[0].scheduled_departure);
-    modalBody.innerHTML = `Flying from ${from_city} to ${to_city} at ${jsonData[0].scheduled_departure}`;
+    let date = new Date(jsonData[0].scheduled_departure);
+    console.log(date.getUTCHours()-6 + ':' + date.getUTCMinutes());
+
+    modalBody.innerHTML = `Flying from ${from_city} to ${to_city} at ${date.getUTCHours()-6}:${date.getUTCMinutes()} PM`;
     console.log(jsonData);
 
   } catch (err) {

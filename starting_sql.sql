@@ -39,23 +39,23 @@ CREATE TABLE hw4_aircraft(
 );
 
 CREATE TABLE hw4_airport (
-	airport_code char(3),
-	airport_name varchar(40),
-	city char(20),
-	timezone text,
+	airport_code char(3) NOT NULL,
+	airport_name varchar(40) NOT NULL,
+	city char(20) NOT NULL,
+	timezone text NOT NULL,
 	PRIMARY KEY (airport_code)
 );
 
 create table hw4_fare_conditions(
-	fare_id int,
-	fare_type varchar(25),
+	fare_id int NOT NULL,
+	fare_type varchar(25) NOT NULL,
 	primary key (fare_id)
 );
 
 create table hw4_aircraft_seats(
-	aircraft_code char(3),
-	seat_no varchar(4),
-	fare_id int,
+	aircraft_code char(3) NOT NULL,
+	seat_no varchar(3) NOT NULL,
+	fare_id int NOT NULL,
 	primary key(aircraft_code, seat_no),
 	constraint "hw4_aircraft_seats_aircraft_id_fky" foreign key (aircraft_code) references hw4_aircraft(aircraft_code),
 	constraint "hw4_aircraft_seats_fare_id_fky" foreign key (fare_id) references hw4_fare_conditions(fare_id)
@@ -66,22 +66,23 @@ CREATE TABLE hw4_flights (
 	flight_no char(6),
 	scheduled_departure timestamp with time zone,
 	scheduled_arrival timestamp WITH time zone,
-	departure_airport char(3),
-	arrival_airport char(3),
-	status varchar(20),
-	aircraft_code char(3),
+	departure_airport char(3) NOT NULL,
+	arrival_airport char(3) NOT NULL,
+	status varchar(20) NOT NULL,
+	aircraft_code char(3) NOT NULL,
 	seats_available integer NOT NULL,
 	seats_booked integer NOT NULL,
+	base_price money not null,
 	PRIMARY KEY (flight_id),
     CONSTRAINT "hw4_flights_arrival_airport_fkey" FOREIGN KEY (arrival_airport) REFERENCES hw4_airport(airport_code),
     CONSTRAINT "hw4_flights_departure_airport_fkey" FOREIGN KEY (departure_airport) REFERENCES hw4_airport(airport_code)
 );
 
 create table hw4_payment(
-	payment_id char(6),
-	payment_method char(6),
-	payment_date timestamp with time zone,
-	amount_paid int,
+	payment_id char(6) NOT NULL,
+	payment_method char(6) NOT NULL,
+	payment_date timestamp with time zone NOT NULL,
+	amount_paid int NOT NULL,
 	primary key (payment_id)
 );
 
@@ -89,7 +90,7 @@ CREATE TABLE hw4_bookings (
     book_ref character(6) NOT NULL,
     book_date timestamp WITH time zone NOT NULL,
     total_amount numeric(10, 2) NOT NULL,
-	payment_id char(6),
+	payment_id char(6) NOT NULL,
     PRIMARY KEY(book_ref),
 	constraint "hw4_bookings_payment_id_fky" foreign key (payment_id) references hw4_payment(payment_id)
 );
@@ -105,39 +106,38 @@ CREATE TABLE hw4_ticket(
 CREATE TABLE hw4_ticket_flights (
     ticket_no character(13) NOT NULL,
     flight_id integer NOT NULL,
-    fare_conditions character varying(10) NOT NULL,
+    fare_type varchar(25) NOT NULL,
     amount numeric(10, 2) NOT NULL,
     PRIMARY KEY (ticket_no, flight_id),
     CONSTRAINT "hw4_ticket_flights_flight_id_fkey" FOREIGN KEY (flight_id) REFERENCES hw4_flights(flight_id),
-    CONSTRAINT "hw4_ticket_flights_ticket_no_fkey" FOREIGN KEY (ticket_no) REFERENCES hw4_ticket(ticket_no),
+    CONSTRAINT "hw4_ticket_flights_ticket_no_fkey" FOREIGN KEY (ticket_no) REFERENCES hw4_ticket(ticket_no)
 );
 
 create table hw4_baggage(
-	baggage_id varchar(20),
-	baggage_claim_no varchar(10),
-	baggage_amount int,
-	primary key (baggage_id),
-	constraint "hw4_passenger_info_baggage_id_fkey" foreign key (baggage_id) references hw4_baggage(baggage_id)
+	baggage_id varchar(20) NOT NULL,
+	baggage_claim_no varchar(10) NOT NULL,
+	baggage_amount int NOT NULL,
+	primary key (baggage_id)
 );
 
 create table hw4_passenger_info(
-	passenger_id varchar(20),
-	passenger_name varchar(40),
-	passenger_email char(50),
-	passenger_no char(15),
-	baggage_id varchar(20),
-	PRIMARY KEY(passenger_id),
-	constraint "hw4_passenger_info_baggage_id_fkey" foreign key (baggage_id) references hw4_baggage(baggage_id)
+	passenger_id varchar(20) NOT NULL,
+	passenger_name varchar(40) NOT NULL,
+	passenger_email char(50) NOT NULL,
+	passenger_no char(15) NOT NULL,
+	passenger_gender char(5) NOT NULL,
+	passenger_birth_day timestamp WITH time zone NOT NULL,
+	PRIMARY KEY(passenger_id)
 );
 
 create table hw4_boarding_info(
-	passenger_id varchar(20),
-	boarding_time timestamp WITH time zone,
-	boarding_gate char(6),
-	seat_no char(3),
-	baggage_id varchar(10),
-	departure_aiport char(3),
+	passenger_id varchar(20) NOT NULL,
+	boarding_time timestamp WITH time zone NOT NULL,
+	boarding_gate char(6) NOT NULL,
+	seat_no varchar(3) NOT NULL,
+	baggage_id varchar(10) NOT NULL,
 	primary key (passenger_id),
+	constraint "hw4_boarding_info_passenger_id_fky" FOREIGN key (passenger_id) references hw4_passenger_info(passenger_id),
 	constraint "hw4_boarding_info_baggage_id_fky" FOREIGN key (baggage_id) references hw4_baggage(baggage_id)
 );
 
@@ -219,14 +219,15 @@ values
 	(
 		1001,
 		'PG0001',
-		'2020-12-01 00:50:00-06',
-		'2020-12-01 01:20:00-06',
+		'2020-12-03 12:50:00-06',
+		'2020-12-03 01:20:00-06',
 		'IAH',
 		'GLS',
 		'scheduled',
 		'773',
-		50,
-		0
+		30,
+		0,
+		80
 	);
 
 insert into
@@ -241,8 +242,9 @@ values
 		'AUS',
 		'scheduled',
 		'763',
-		50,
-		0
+		30,
+		0,
+		500
 	);
 
 insert into
@@ -257,8 +259,9 @@ values
 		'SAT',
 		'scheduled',
 		'SU9',
-		50,
-		0
+		30,
+		0,
+		1400
 	);
 
 insert into
@@ -273,8 +276,9 @@ values
 		'DFW',
 		'scheduled',
 		'320',
-		50,
-		0
+		30,
+		0,
+		80
 	);
 
 insert into
@@ -289,8 +293,9 @@ values
 		'GLS',
 		'scheduled',
 		'321',
-		50,
-		0
+		30,
+		0,
+		500
 	);
 
 insert into
@@ -305,8 +310,9 @@ values
 		'AUS',
 		'scheduled',
 		'773',
-		50,
-		0
+		30,
+		0,
+		1400
 	);
 
 insert into
@@ -321,8 +327,9 @@ values
 		'SAT',
 		'scheduled',
 		'763',
-		50,
-		0
+		30,
+		0,
+		80
 	);
 
 insert into
@@ -337,8 +344,9 @@ values
 		'DFW',
 		'scheduled',
 		'SU9',
-		50,
-		0
+		30,
+		0,
+		500
 	);
 
 insert into
@@ -353,8 +361,9 @@ values
 		'GLS',
 		'scheduled',
 		'320',
-		50,
-		0
+		30,
+		0,
+		1400
 	);
 
 insert into
@@ -369,8 +378,9 @@ values
 		'AUS',
 		'scheduled',
 		'321',
-		50,
-		0
+		30,
+		0,
+		80
 	);
 
 insert into
@@ -385,8 +395,9 @@ values
 		'SAT',
 		'scheduled',
 		'773',
-		50,
-		0
+		30,
+		0,
+		500
 	);
 
 insert into
@@ -401,7 +412,667 @@ values
 		'DFW',
 		'scheduled',
 		'763',
-		50,
-		0
+		30,
+		0,
+		1400
 	);
 
+/*========================================================*/
+
+insert into
+	hw4_fare_conditions
+values(
+	1,
+	'Economy'
+);
+
+insert into
+	hw4_fare_conditions
+values(
+	2,
+	'Business'
+);
+
+insert into
+	hw4_fare_conditions
+values(
+	3,
+	'First Class'
+);
+
+/*========================================================*/
+insert into hw4_aircraft_seats values (
+	'321',
+	'M11',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M12',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M13',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M14',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M15',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M16',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M17',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M18',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M19',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'321',
+	'M20',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L11',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L12',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L13',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L14',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L15',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L16',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L17',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L18',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L19',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'L20',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K11',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K12',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K13',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K14',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K15',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K16',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K17',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K18',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K19',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'K20',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J11',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J12',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J13',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J14',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J15',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J16',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J17',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J18',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J19',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'320',
+	'J20',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I11',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I12',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I13',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I14',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I15',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I16',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I17',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I18',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I19',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'I20',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H11',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H12',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H13',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H14',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H15',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H16',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H17',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H18',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H19',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'H20',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G11',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G12',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G13',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G14',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G15',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G16',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G17',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G18',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G19',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'SU9',
+	'G20',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F11',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F12',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F13',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F14',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F15',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F16',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F17',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F18',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F19',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'F20',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E11',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E12',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E13',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E14',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E15',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E16',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E17',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E18',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E19',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'E20',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D11',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D12',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D13',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D14',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D15',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D16',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D17',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D18',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D19',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'763',
+	'D20',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C11',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C12',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C13',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C14',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C15',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C16',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C17',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C18',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C19',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'C20',
+	3
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B11',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B12',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B13',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B14',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B15',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B16',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B17',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B18',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B19',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'B20',
+	2
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'A13',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'A14',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'A15',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'A16',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'A17',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'A18',
+	1
+);
+insert into hw4_aircraft_seats values (
+	'773',
+	'A19',
+	1
+);

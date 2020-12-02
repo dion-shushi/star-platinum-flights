@@ -23,22 +23,56 @@ const displayTodos = () => {
   const result_list = document.getElementById("table-title");
   result_list.innerHTML = "<div id='table-title'>Available Flights</div>";
 
+  const from = document.getElementById('from_location').value;
+  const to = document.getElementById('to_location').value;
+
   // display all flights by modifying the HTML in "result-table"
   let tableHTML = "";
   availableFlights.map(flight => {
     tableHTML +=
       `<tr key=${flight.flight_id} id="clickable" onClick=clicked(${flight.flight_id}) data-toggle="modal" data-target="#myModal">
-    <th>${flight.from_city}</th>
-    <th>${flight.to_city}</th>
-    <th>${flight.price}</th>
+    <th>${from}</th>
+    <th>${to}</th>
+    <th>${flight.scheduled_departure}</th>
+    <th>${flight.base_price}</th>
     </tr>`;
   })
 
   resultTable.innerHTML = tableHTML;
 }
 
-function clicked(flightId) {
-  console.log("clicked " + flightId);
+async function clicked(flight_id) {
+  console.log(flight_id);
+  const modalHeader = document.querySelector('#myModalLabel');
+  const modalBody = document.querySelector('.modal-body');
+
+  const from_city = document.getElementById('from_location').value;
+  const to_city = document.getElementById('to_location').value;
+
+  const from_date = document.getElementById('departure').value;
+  var nDate = new Date(from_date);
+  console.log(nDate.getDate());
+  const to_date = document.getElementById('return').value;
+  try {
+    const body = {
+      flight_id: flight_id
+    };
+    const response = await fetch("http://localhost:5000/flightInfoFromId", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    // response.json() is the returned array
+    const jsonData = await response.json();
+
+    modalHeader.innerHTML = `${jsonData[0].departure_airport} -> ${jsonData[0].arrival_airport}`;
+    console.log(jsonData[0].scheduled_departure);
+    modalBody.innerHTML = `Flying from ${from_city} to ${to_city} at ${jsonData[0].scheduled_departure}`;
+    console.log(jsonData);
+
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 async function displayWithFilter() {
@@ -76,10 +110,16 @@ async function displayWithFilter() {
 async function displayCity() {
   const from_city = document.getElementById('from_location').value;
   const to_city = document.getElementById('to_location').value;
+  const from_date = document.getElementById('departure').value;
+  var nDate = new Date(from_date);
+  console.log(nDate.getDate());
+  const to_date = document.getElementById('return').value;
   try {
     const body = {
       from_c: from_city,
-      to_c: to_city
+      to_c: to_city,
+      from_d: from_date,
+      to_d: to_date
     };
     const response = await fetch("http://localhost:5000/grabFlights", {
       method: "POST",
@@ -96,10 +136,14 @@ async function displayCity() {
       }
     ]
 
-    console.log(arrayOfData);
+    const departure_date_input = document.getElementById('departure').value;
+    console.log(departure_date_input);
 
-    // setAvailableFlights(jsonData);
-    // displayTodos();
+    // console.log(arrayOfData);
+    console.log(jsonData);
+
+    setAvailableFlights(jsonData);
+    displayTodos();
     // console.log(jsonData);
 
   } catch (err) {

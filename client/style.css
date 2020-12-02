@@ -14,13 +14,13 @@
 }
 
 #border {
-border-radius: 10px;
-border: 2px solid lightgray;
-padding: 20px;
-width: 80%;
-height: 145px;
-margin: auto;
-box-shadow: 10px 10px 10px grey;
+  border-radius: 10px;
+  border: 2px solid lightgray;
+  padding: 20px;
+  width: 80%;
+  height: 145px;
+  margin: auto;
+  box-shadow: 10px 10px 10px grey;
 }
 
 #title {
@@ -29,17 +29,17 @@ box-shadow: 10px 10px 10px grey;
 }
 
 #result-list {
-width: 80%;
-text-align: center;
-margin-left: 10%;
+  width: 80%;
+  text-align: center;
+  margin-left: 10%;
 }
 
 .flightButton {
-border-radius: 4px;
-border: 1px solid gray;
-height: 35px;
-text-align-last: center;
-width: 290px;
+  border-radius: 4px;
+  border: 1px solid gray;
+  height: 35px;
+  text-align-last: center;
+  width: 290px;
 }
 
 #flight_class {
@@ -48,13 +48,14 @@ width: 290px;
   text-align-last: center;
 }
 
-#search_button{
+#search_button {
   display: flex;
 }
 
-#search_button, button{
+#search_button {
   justify-content: center;
   align-items: center;
+  margin-top: 3%;
 }
 
 #dynamic-flights {
@@ -112,35 +113,25 @@ width: 290px;
   pointer-events: all;
 }
 
-#from_location {
-  margin-top: 2%;
-}
-
-#to_location {
-  margin-left: .5%;
-}
-
 #departure {
-margin-left: 5%;
-border-radius: 4px;
-border: 1px solid gray;
-height: 35px;
-width: 193px;
-text-align: center;
+  margin-left: 34%;
+  border-radius: 4px;
+  border: 1px solid gray;
+  height: 35px;
+  width: 193px;
+  text-align: center;
 }
 
 #return {
-border-radius: 4px;
-border: 1px solid gray;
-height: 35px;
-width: 193px;
-text-align: center;
+  border-radius: 4px;
+  border: 1px solid gray;
+  height: 35px;
+  width: 193px;
+  text-align: center;
 }
 
 button {
-margin-left: 44%;
-margin-top: 2%;
-width: 100px;
-box-shadow: 10px 10px 10px grey;
-border-radius: 4px;
+  width: 100px;
+  box-shadow: 10px 10px 10px grey;
+  border-radius: 4px;
 }

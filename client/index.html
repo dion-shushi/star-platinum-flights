@@ -9,7 +9,6 @@
 
     <!-- style file -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="src/gm-date-selection.css">
 
     <title>Platinum Flights</title>
     <!-- <header>
@@ -18,10 +17,16 @@
 </head>
 
 <body>
+    <div id="navbar">
+        <button id="homeButton">Home</button>
+        <button id="aboutButton">About</button>
+        <button id="bookedButton" onclick="displayBookedFlights()" data-dismiss="modal" data-toggle="modal"
+        data-target="#bookedFlightsModal" >Booked Flights</button>
+    </div>
     <div id="banner">
-        <img src="img/cloud.png" id="cloud01" .>
+        <!-- <img src="img/cloud.png" id="cloud01" .> -->
         <input type="image" id="logo" src="img/logo_actual_01.png" onclick="goToArt()" />
-        <img src="img/cloud.png" id="cloud01" .>
+        <!-- <img src="img/cloud.png" id="cloud01" .> -->
     </div>
 
     <!-- Title -->
@@ -36,6 +41,11 @@
             <option value="business">Business</option>
             <option value="first class">First Class</option>
         </select>
+        <select name="people_num" id="people_num" class="people_button">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
 
         <div id="location">
 
@@ -48,8 +58,8 @@
             </select>
 
             <select name="to_location" id="to_location" class="flightButton">
-                <option value="houston"> Houston, Texas </option>
                 <option value="galveston"> Galveston, Texas </option>
+                <option value="houston"> Houston, Texas </option>
                 <option value="austin"> Austin, Texas </option>
                 <option value="san antonio"> San Antonio, Texas </option>
                 <option value="dallas"> Dallas, Texas </option>
@@ -105,7 +115,27 @@
                         <h4 class="modal-title" id="passengerInfoModalTitleId">Who's flying?</h4>
 
                     </div>
-                    <div class="modal-body">...</div>
+                    <div class="modal-body">
+                        <div id="name">
+                            First Name: <input type="text" id="passengerFirstName" />
+                            Last Name: <input type="text" id="passengerLastName" />
+                        </div>
+                        <div id=birthday>
+                            Birth Date: <input type="date" id="passengerBirthDate" value="2020-12-01" />
+                        </div>
+                        <div id="email">
+                            Email address: <input type="text" id="passengerEmail" />
+                        </div>
+                        <div id="number">
+                            Phone Number: <input type="text" id="passengerNumber" />
+                        </div>
+                        <div class="gender">
+                            <form id="genderInput">
+                                <input type="radio" name="sex" id="male" value="male" checked> Male
+                                <input type="radio" name="sex" id="female" value="female"> Female
+                            </form>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
                             data-target="#paymentInfoModal" onclick="goToPaymentPage()">Continue</button>
@@ -124,16 +154,19 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span
                                 aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-
                         </button>
                         <h4 class="modal-title" id="paymentInfoModalTitleId">Payment</h4>
 
                     </div>
-                    <div class="modal-body">...</div>
+                    <div class="modal-body">
+                        <div>
+                            Credit Card Number: <input type="text" id="creditCardNum" />
+                            CVV: <input type="text" id="creditCardCVV" />
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
-                        data-target="#selectSeatModal"
-                            onclick="goToSelectSeatsPage()">Continue</button>
+                            data-target="#selectSeatModal" onclick="goToSelectSeatsPage()">Continue</button>
                     </div>
                 </div>
             </div>
@@ -152,12 +185,15 @@
                         </button>
                         <h4 class="modal-title" id="selectSeatModalTitleId">Seats</h4>
 
+                        <!-- create a dynmaic table here -->
+                        <div id="dynamic-seats-table"></div>
+
+
                     </div>
                     <div class="modal-body">...</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
-                        data-target="#reviewModal"
-                            onclick="goToReviewPage()">Continue</button>
+                            data-target="#reviewModal" onclick="goToReviewPage()">Continue</button>
                     </div>
                 </div>
             </div>
@@ -177,10 +213,33 @@
                         <h4 class="modal-title" id="reviewModalTitleId">Review</h4>
 
                     </div>
-                    <div class="modal-body">...</div>
+                    <div class="modal-body" id="review-modal-body">...</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
                             onclick="goToBookTicketsPage()">Book</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booked flights Modal -->
+    <div class="modal fade" id="bookedFlightsModal" tabindex="-1" role="dialog" aria-labelledby="bookedFlightsModalLabel"
+        aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="bookedFlightsModalTitleId">Booked Flights</h4>
+
+                    </div>
+                    <div class="modal-body" id="bookedFlightsBodyId"></div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal"
+                            data-target="#selectSeatModal" onclick="goToSelectSeatsPage()">Continue</button> -->
                     </div>
                 </div>
             </div>

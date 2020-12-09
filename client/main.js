@@ -30,10 +30,10 @@ let paymentInfo = {
 }
 
 let bookingsInfo = {
-  book_ref: '',
+  book_ref: '101010',
   book_date: '',
   total_amount: '',
-  payment_id: ''
+  payment_id: '50000'
 }
 
 let passengersInfo = [
@@ -343,11 +343,13 @@ async function goToReviewPage() {
 
 async function goToBookTicketsPage() {
   const body = {
-    book_ref: 'ABC124',
+    book_ref: bookingsInfo.book_ref,
     book_date: new Date(),
     total_amount: basicFlightInfo.price,
-    payment_id: 1
+    payment_id: bookingsInfo.payment_id
   }
+  bookingsInfo.book_ref = bookingsInfo.book_ref+1;
+  bookingsInfo.payment_id = bookingsInfo.payment_id+1;
   try{
     const response = await fetch("http://localhost:5000/updateBookingsTable", {
       method: "POST",

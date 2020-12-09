@@ -42,6 +42,8 @@ app.post('/grabFlights', async (request, response) => {
     const from_ = await pool.query(`SELECT airport_code from hw4_airport where city=($1)`, [from]);
     const to_ = await pool.query(`SELECT airport_code from hw4_airport where city=($1)`, [to]);
 
+    console.log(to);
+
     const airport_code_from = from_.rows[0].airport_code;
     const airport_code_to = to_.rows[0].airport_code;
 

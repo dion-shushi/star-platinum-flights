@@ -48,6 +48,14 @@
   text-align-last: center;
 }
 
+#from_location {
+  margin-top:2%;
+  }
+
+#to_location {
+  margin-left:.5%;
+}
+
 #search_button {
   display: flex;
 }
@@ -114,7 +122,7 @@
 }
 
 #departure {
-  margin-left: 34%;
+  margin-left: 5%;
   border-radius: 4px;
   border: 1px solid gray;
   height: 35px;
